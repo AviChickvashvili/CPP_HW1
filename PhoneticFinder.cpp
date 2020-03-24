@@ -5,7 +5,6 @@
 
 
 using namespace std;
-extern bool exists = false ;
 namespace phonetic {
     bool change(char word1, char word2) {
 
@@ -52,12 +51,13 @@ namespace phonetic {
         return size;
     }
 
-    void check(char *p_text, char *_word) {
+    bool check(char *p_text, char *_word) {
 
         string orig = (string) p_text;
         int size1 = getSize(p_text);
         int size2 = getSize(_word);
-//    cout<<_word<<endl;
+
+//   cout<<"*******"<<_word<<"*******"<<endl;
 //    cout<<p_text<<endl;
         int h = 0;
         if (size1 == size2) {
@@ -68,13 +68,13 @@ namespace phonetic {
             }
             if (ans == true) {
                 cout << orig << endl;
-                exists = true;
+                return true;
             }
         }
-
+    return false;
     }
 
-    string search(string text, string word) {
+    string find(string text, string word) {
         char *cstr = new char[text.length() + 1];
         strcpy(cstr, text.c_str());
 
@@ -82,23 +82,29 @@ namespace phonetic {
         strcpy(_word, word.c_str());
 
         char *p = strtok(cstr, " ");
-        while (p != 0) {
+        string x =(string)cstr;
+        string _e = (string)_word;
+        int y = 0;
+        bool exists = false;
+        string temp = "";
+        while (p != 0 && y<x.length() && exists==false) {
             // cout << p << '\n';
 
-            check(p, _word);
+            exists = check(p, _word);
+            temp= (string)p;
             p = strtok(NULL, " ");
         }
 
         if (exists == true) {}
-        else {
-            string word2 = "The word : " + word + " dosen't exists";
+        else if(_e.length()==0)
+        {
+            string word2 = "The word is Empty";
             throw std::invalid_argument(word2);
         }
-    }
-
-    int main() {
-        string text = "AVI Dumer michAEL";
-        string a = "tomer";
-        search(text, a);
+        else {
+            string word2 = "The word : " + word +" dosen't exists";
+            throw std::invalid_argument(word2);
+        }
+        return temp;
     }
 }
