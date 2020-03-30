@@ -90,14 +90,14 @@ namespace phonetic {
         while (p != 0 && y<x.length() && exists==false) {
             // cout << p << '\n';
 
-            exists = check(p, _word);
-            temp= (string)p;
-            p = strtok(NULL, " ");
-        }
+              exists = check(p, _word);
+        temp= (string)p;
+        //p = strtok(NULL, " ");
+    }
 
-        if (exists == true) {
-        return x;
-        }
+    if (exists == true) {
+        return p;
+    }
         else if(_e.length()==0)
         {
             string word2 = "The word is Empty";
