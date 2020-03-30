@@ -1,112 +1,109 @@
 #include "PhoneticFinder.hpp"
+#include <iostream>
 #include <string>
 #include <cstring>
-#include <iostream>
-
-
+#include <stdexcept>
 using namespace std;
-namespace phonetic {
-    bool change(char word1, char word2) {
 
-        if (word1 == word2) {
-            return true;
-        } else {
-            if ((word1 == 'v' || word1 == 'w') && (word2 == 'v' || word2 == 'w')) {
-                return true;
-            } else if ((word1 == 'b' || word1 == 'f' || word1 == 'p') &&
-                       (word2 == 'b' || word2 == 'f' || word2 == 'p')) {
-                return true;
-            } else if ((word1 == 'g' || word1 == 'j') && (word2 == 'g' || word2 == 'j')) {
-                return 1;
-            } else if ((word1 == 'c' || word1 == 'k' || word1 == 'q') &&
-                       (word2 == 'c' || word2 == 'k' || word2 == 'q')) {
-                return 1;
-            } else if ((word1 == 's' || word1 == 'z') && (word2 == 's' || word2 == 'z')) {
-                return 1;
-            } else if ((word1 == 'd' || word1 == 't') && (word2 == 'd' || word2 == 't')) {
-                return 1;
-            } else if ((word1 == 'o' || word1 == 'u') && (word2 == 'o' || word2 == 'u')) {
-                return 1;
-            } else if ((word1 == 'i' || word1 == 'y') && (word2 == 'i' || word2 == 'y')) {
-                return 1;
-            }
-            return 0;
-        }
+namespace phonetic{
+
+
+int swapper(char c1,char c2)
+{
+    if(c1 >= 'A' && c1 <= 'Z')
+    {
+        c1 = c1+32;
     }
-
-    char asciitolower(char in) {
-        if (in <= 'Z' && in >= 'A')
-            return in - ('Z' - 'z');
-        return in;
+    if(c2 >= 'A' && c2 <= 'Z')
+    {
+        c2 = c2+32;
     }
-
-    int getSize(char *s) {
-        char *t; // first copy the pointer to not change the original
-        int size = 0;
-
-        for (t = s; *t != '\0'; t++) {
-            size++;
-            *t = asciitolower(*t);
-        }
-        return size;
+    if(c1 == c2)
+    {
+        return 1;
     }
-
-    bool check(char *p_text, char *_word) {
-
-        string orig = (string) p_text;
-        int size1 = getSize(p_text);
-        int size2 = getSize(_word);
-
-//   cout<<"*******"<<_word<<"*******"<<endl;
-//    cout<<p_text<<endl;
-        int h = 0;
-        if (size1 == size2) {
-            bool ans = true;
-            while (h < size1 && ans == true) {
-                ans = change(p_text[h], _word[h]);
-                h++;
-            }
-            if (ans == true) {
-                cout << orig << endl;
-                return true;
-            }
-        }
-    return false;
-    }
-
-    string find(string text, string word) {
-        char *cstr = new char[text.length() + 1];
-        strcpy(cstr, text.c_str());
-
-        char *_word = new char[word.length() + 1];
-        strcpy(_word, word.c_str());
-
-        char *p = strtok(cstr, " ");
-        string x =(string)cstr;
-        string _e = (string)_word;
-        int y = 0;
-        bool exists = false;
-        string temp = "";
-        while (p != 0 && y<x.length() && exists==false) {
-            // cout << p << '\n';
-
-   
-            exists = check(p, _word);
-            temp= (string)p;
-            p = strtok(NULL, " ");
-        }
-
-        if (exists == true) {
-        return x;
-        else if(_e.length()==0)
+    else
+    {
+        if( (c1 == 'v' || c1 == 'w') && (c2 == 'v' || c2 == 'w')) 
         {
-            string word2 = "The word is Empty";
-            throw std::invalid_argument(word2);
+            return 1;
         }
-        else {
-            string word2 = "The word : " + word +" dosen't exists";
-            throw std::invalid_argument(word2);
+        else if ((c1 == 'b' || c1 == 'f' || c1 == 'p') && (c2 == 'b' || c2 == 'f' || c2== 'p'))
+        {
+            return 1;
         }
-        return temp;
+        else if ((c1 == 'g' || c1 == 'j') && (c2 == 'g' || c2 == 'j'))
+        {
+            return 1;
+        }
+        else if ((c1 == 'c' || c1 == 'k' || c1 == 'q') && (c2 == 'c' || c2 == 'k' || c2== 'q'))
+        {
+           return 1;
+        }
+        else if ((c1 == 's' || c1 == 'z') && (c2 == 's' || c2 == 'z'))
+        {
+            return 1;
+        }
+        else if ((c1 == 'd' || c1 == 't') && (c2 == 'd' || c2 == 't'))
+        {
+           return 1;
+        }
+        else if ((c1 == 'o' || c1 == 'u') && (c2 == 'o' || c2 == 'u'))
+        {
+           return 1;
+        }
+        else if ((c1 == 'i' || c1 == 'y') && (c2 == 'i' || c2 == 'y'))
+        {
+           return 1;
+        }
+        return 0;
     }
+}
+
+string find(string text,string word)
+{
+   char* cstrText = new char[text.length()+1];
+   char* cstrWord = new char(word.length()+1); 
+   strcpy(cstrText,text.c_str());
+   strcpy(cstrWord,word.c_str());
+    char* arrWord;
+    arrWord = strtok(cstrText," ");
+    int ans = 1;
+    while(arrWord != NULL)
+    {
+        ans =1;
+        int counter  =0;
+        while(arrWord[counter] != '\0')
+        {
+           if(counter < word.length())
+           {
+            int ansSwap = swapper(arrWord[counter],cstrWord[counter]);
+            ans = ans & ansSwap;
+           }
+           else
+           {
+               ans = 0;
+           }
+           
+            counter++;
+        }
+        if(counter != word.length())
+        {
+            ans = 0;
+        }
+        if(ans == 1)
+        {
+            return arrWord;
+        }
+        //cout << counter << endl;
+        arrWord = strtok(NULL," ");
+    }
+   // throw 
+   if(ans == 0)
+    {
+        string test = "Could not load config file '" + word + "'";
+        throw std::invalid_argument(test);
+    }
+    return "FAIL";
+}
 }
