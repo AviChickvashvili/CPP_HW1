@@ -95,7 +95,9 @@ namespace phonetic {
             p = strtok(NULL, " ");
         }
 
-        if (exists == true) {}
+        if (exists == true) {
+        return word;
+        }
         else if(_e.length()==0)
         {
             string word2 = "The word is Empty";
