@@ -96,7 +96,7 @@ namespace phonetic {
         }
 
         if (exists == true) {
-        return temp;
+        return x;
         }
         else if(_e.length()==0)
         {
